@@ -1,0 +1,18 @@
+# --- Core (install CPU or CUDA build of torch first, see README) ---
+torch>=2.0
+torchvision>=0.15
+numpy>=1.24
+Pillow>=9.5
+PyYAML>=6.0
+
+# --- Training / eval ---
+tqdm>=4.66
+tensorboard>=2.13
+matplotlib>=3.7
+
+# --- Demo ---
+gradio>=4.0
+opencv-python>=4.8
+
+# --- Tests ---
+pytest>=7.4

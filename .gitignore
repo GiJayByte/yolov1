@@ -1,0 +1,18 @@
+# Data / checkpoints / runs
+data/
+checkpoints/
+runs/
+assets/figures/*.png
+assets/figures/*.json
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
