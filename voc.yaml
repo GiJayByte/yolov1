@@ -1,0 +1,52 @@
+# YOLOv1 on PASCAL VOC - single source of truth for every hyperparameter.
+
+data:
+  root: data                 # VOCdevkit is created under here (torchvision auto-download)
+  year: "2007"
+  image_set: trainval
+  extra_year: "2012"         # set to null to train on VOC2007 only
+  extra_image_set: trainval
+  image_size: 448
+  letterbox: false           # false = paper's direct resize; true = keep aspect ratio + pad
+  num_workers: 4
+
+model:
+  S: 7                       # grid size
+  B: 2                       # boxes per cell
+  C: 20                      # PASCAL VOC classes
+  variant: full              # full (24 conv) | fast (9 conv)
+  pretrained: false          # true = reuse torchvision GoogLeNet conv trunk
+  dropout: 0.5
+  hidden_dim: 4096           # paper value; lower (e.g. 1024) to cut memory on CPU
+  batchnorm: true            # false = paper's dropout-only conv stack
+
+loss:
+  lambda_coord: 5.0
+  lambda_noobj: 0.5
+
+train:
+  epochs: 135
+  schedule: paper            # paper | reduced
+  batch_size: 16             # paper used 64; reduce for CPU/Colab
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0005
+  amp: true                  # only takes effect on CUDA
+  grad_clip: 10.0
+  eval_every: 5              # validate loss every N epochs
+  checkpoint_dir: checkpoints
+  log_dir: runs
+  resume: null
+  seed: 42
+  device: auto               # auto | cpu | cuda
+
+augment:
+  enabled: true
+  scale: 0.2                 # +/-20% random scale (paper)
+  translate: 0.2             # +/-20% random translate (paper)
+  hsv: 0.5                   # +/-50% exposure/saturation -> up to 1.5x (paper)
+  hflip: false               # disabled by default (left/right class semantics)
+
+inference:
+  conf_threshold: 0.25
+  nms_iou: 0.5
